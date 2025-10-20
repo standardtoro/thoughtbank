@@ -1,0 +1,1049 @@
+/*
+  Global styles
+  This stylesheet borrows its colour palette and typography from
+  the reference portfolio site provided by the user. The design
+  emphasises readability and a calm, modern aesthetic. Colours are
+  off‑white for backgrounds (#f5f3ee), dark brown for text
+  (#2f2c26) and a soft green accent (#94c9a9) for interactive
+  elements. A custom @font‑face loads the Charter typeface so
+  everything feels cohesive with the sample website.
+*/
+
+@font-face {
+  font-family: 'Charter';
+  src: url('https://fonts.cdnfonts.com/s/21027/Charter%20Regular.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Charter', serif;
+  background-color: #f5f3ee;
+  color: #2f2c26;
+  line-height: 1.7;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.page-header {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+/* Logo replacing the textual heading. The logo is centred,
+   scales responsively and leaves some breathing room below. */
+.logo {
+  display: block;
+  margin: 0 auto;
+  max-width: 260px;
+  height: auto;
+  margin-bottom: 8px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: normal;
+}
+
+.page-header .subtitle {
+  margin: 10px 0 0;
+  color: #6c6c6c;
+  font-size: 1rem;
+}
+
+.user-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 15px;
+  /* Center the article name and author input fields horizontally for
+     better aesthetics on wide screens. */
+  justify-content: center;
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+}
+
+.input-field input {
+  padding: 8px 12px;
+  border: 1px solid #d3d0c9;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #2f2c26;
+  font-family: 'Charter', serif;
+  font-size: 1rem;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.input-field input:focus {
+  outline: none;
+  border-color: #94c9a9;
+}
+
+#articleInput {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #d3d0c9;
+  border-radius: 8px;
+  resize: vertical;
+  font-size: 1rem;
+  font-family: 'Charter', serif;
+  color: #2f2c26;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) inset;
+  transition: border-color 0.2s ease-in-out;
+}
+
+#articleInput:focus {
+  outline: none;
+  border-color: #94c9a9;
+}
+
+#generateBtn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #94c9a9;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  font-family: 'Charter', serif;
+}
+
+#generateBtn:hover {
+  background-color: #82b98f;
+}
+
+#tweetsContainer {
+  margin-top: 30px;
+}
+
+/* Drop zone for pasting or dragging articles.  It replaces the plain
+   textarea and invites the user to drop or paste their content.
+   The design reflects the same light palette and rounded corners. */
+/* Wrapper grouping the drop zone with the mode slider.  Aligns items
+   horizontally and provides spacing between them. */
+.drop-wrapper {
+  display: flex;
+  align-items: stretch;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+/* Drop zone: dashed container centred on its prompt.  It flexes to fill
+   available horizontal space within the wrapper. */
+.drop-zone {
+  flex: 1;
+  min-height: 140px;
+  padding: 20px;
+  border: 2px dashed #d3d0c9;
+  border-radius: 10px;
+  background-color: #faf9f4;
+  color: #6c6c6c;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease-in-out, background-color 0.2s;
+}
+
+.drop-zone.dragover {
+  border-color: #94c9a9;
+  background-color: #f0ede6;
+}
+
+.drop-prompt {
+  position: static;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+/* Mode slider container. Positioned inside the drop zone along the
+   right edge. Contains a vertical line and three dots representing
+   the available chunking modes. */
+.mode-slider {
+  position: relative;
+  width: 24px;
+  /* Let the height be determined by its container (drop wrapper). */
+  pointer-events: all;
+  flex: none;
+}
+
+/* Vertical line for the slider */
+.slider-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background-color: #94c9a9;
+  transform: translateX(-50%);
+}
+
+/* Slider dots */
+.slider-dot {
+  position: absolute;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #d3d0c9;
+  border: 2px solid #94c9a9;
+  transform: translateX(-50%);
+  transition: background-color 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+
+/* Position the dots along the slider. Top for paragraph, middle for tweet,
+   bottom for sentence. Use percentage offsets for vertical placement. */
+.slider-dot[data-mode="paragraph"] { top: 10%; }
+.slider-dot[data-mode="280"] { top: 50%; transform: translate(-50%, -50%); }
+.slider-dot[data-mode="sentence"] { top: 90%; transform: translate(-50%, -100%); }
+
+/* Highlight the active dot */
+.slider-dot.active {
+  background-color: #94c9a9;
+  transform: translateX(-50%) scale(1.2);
+}
+
+/* Floating mode label. Appears temporarily beside the slider when the
+   user selects a mode, then fades away. The position will be set
+   via inline styles in JavaScript. */
+ .mode-label {
+  position: absolute;
+  /* Place the label to the right of the slider */
+  left: calc(100% + 8px);
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  color: #94c9a9;
+  background: rgba(148, 201, 169, 0.1);
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+/* Break the Note button positioned in the centre of the drop zone */
+/*
+ * Hide the primary action button (Break the Note). The button
+ * remains in the DOM for structural consistency but is not
+ * displayed. Article processing now occurs automatically when
+ * content is provided via drag or paste. Retaining the class
+ * ensures any future styling references do not break.
+ */
+.break-btn {
+  display: none;
+}
+
+/* Hide the now‑unused action button and stats bar. The interface
+   processes the article automatically, so these elements are not
+   displayed. */
+#generateBtn {
+  display: none !important;
+}
+.stats-bar {
+  display: none !important;
+}
+
+/* Actions row groups the generate button with mode toggle.  It
+   collapses nicely on small screens and remains inline on wider
+   screens. */
+.actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  /* Align children to stretch so the toggle and button align perfectly
+     vertically. Each child can control its internal padding. */
+  align-items: stretch;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+/* Mode toggle container.  The JS will inject individual buttons
+   styled as segmented controls. */
+.mode-toggle {
+  display: flex;
+  border: 1px solid #d3d0c9;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mode-toggle button {
+  background: #faf9f4;
+  color: #2f2c26;
+  border: none;
+  /* Increase padding to better align with the height of the primary
+     action button. */
+  padding: 10px 16px;
+  font-family: 'Charter', serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  /* Use flexbox to centre text vertically so buttons align to the
+     same height as the generate button when stretched. */
+  display: flex;
+  align-items: center;
+}
+
+.mode-toggle button + button {
+  border-left: 1px solid #d3d0c9;
+}
+
+.mode-toggle button.active {
+  background-color: #94c9a9;
+  color: #fff;
+}
+
+.mode-toggle button:hover:not(.active) {
+  background-color: #e8e5dc;
+}
+
+/* Full article view styling. When the user switches to Article Mode,
+   the entire text appears in this container. It maintains the same
+   padding, rounded corners and subtle shadow as individual cards,
+   but spans the full width. */
+.article-view {
+  background-color: #fff;
+  border: 1px solid #e7e4de;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  white-space: pre-wrap;
+  line-height: 1.7;
+}
+
+.tweet {
+  background-color: #fff;
+  border: 1px solid #e7e4de;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  /* Add perspective so 3D flip animations look realistic */
+  perspective: 800px;
+}
+
+/* Flip-out animation for removing tweets. When a user clicks the reply
+   (back) icon, the tweet flips backwards like a sheet of paper and
+   disappears. The transform origin is set to the top edge to mimic
+   flipping away from the user. */
+/* Flip-out animation for removing tweets from the main list (reply/back).
+   When a user clicks the reply icon on a generated tweet, the card flips
+   backward away from the user. The origin is at the top edge so the
+   element appears to curl up and out of view. */
+.flip-out {
+  animation: flipOut 0.6s forwards;
+  transform-origin: top;
+}
+
+@keyframes flipOut {
+  0% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: rotateX(-90deg) translateY(-20px);
+    opacity: 0;
+  }
+}
+
+/* Flip-left animation for unsaving tweets. When a user drags a saved
+   tweet to the left beyond a threshold, the card flips over the left
+   edge like turning a page in a book and gracefully disappears. */
+/*
+   Smooth swipe‑left animation used when a user removes a saved tweet by
+   dragging it to the left. Instead of a jarring 3D flip, the card
+   glides off screen while fading out, giving a more graceful
+   disappearance. The animation runs once and forwards so the
+   element does not reappear.
+*/
+.swipe-left {
+  animation: swipeLeft 0.5s forwards;
+  /* ensure the card leaves the stacking context */
+  transform-origin: left center;
+}
+
+@keyframes swipeLeft {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+.tweet-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #d3d0c9;
+  color: #2f2c26;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+
+.tweet-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.tweet-details .name {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.tweet-details .handle {
+  font-size: 0.85rem;
+  color: #6c6c6c;
+  margin-top: 2px;
+}
+
+.tweet-content {
+  font-size: 1rem;
+  margin-bottom: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.tweet-actions {
+  display: flex;
+  justify-content: space-between;
+  max-width: 280px;
+  /* Limit the width so actions aren't too spaced on wide screens */
+  color: #6c6c6c;
+  font-size: 0.85rem;
+  position: relative;
+}
+
+.tweet-actions span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+  /* Position relative so that burst dots can be absolutely positioned
+     relative to the icon when hearts are liked */
+  position: relative;
+}
+
+.tweet-actions span:hover {
+  color: #94c9a9;
+}
+
+.tweet-actions svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+}
+
+/* When a like/heart icon is active, colour it with the accent colour */
+.tweet-actions span.liked {
+  color: #94c9a9;
+}
+.tweet-actions span.liked svg {
+  stroke: #94c9a9;
+  fill: #94c9a9;
+}
+
+/* Dot used in the heart burst animation. These elements are created
+   dynamically by the script and removed after their animation ends.
+   The styling here provides sensible defaults; the real animation
+   values (transform and opacity) are applied via inline styles. */
+.burst-dot {
+  pointer-events: none; /* avoid interfering with clicks */
+  z-index: 1;
+}
+
+/* Share menu styling. The menu appears below the retweet icon with options
+   to share via Twitter or email. */
+.share-menu {
+  /*
+    The share menu's position is now dynamically controlled by
+    JavaScript. We remove the default bottom/left/transform
+    properties so they don't interfere with the coordinates set in
+    script.js. The menu will be positioned via inline styles
+    relative to the mouse pointer when the user hovers the share or
+    retweet icons.
+  */
+  position: static;
+  /*
+    Do not set bottom/left/transform here – those will be set by
+    script.js using fixed positioning. Keeping position static
+    avoids unexpected offsets from the parent container.
+  */
+  background-color: #fff;
+  border: 1px solid #e7e4de;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 100;
+  /* Prevent the labels from wrapping and give the menu a reasonable width */
+  white-space: nowrap;
+  min-width: 110px;
+}
+
+.share-menu a {
+  color: #2f2c26;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.share-menu a:hover {
+  color: #94c9a9;
+}
+
+/* Plus menu styling (for organising tweets into folders). It resembles
+   the share menu but includes an input and buttons. */
+.plus-menu {
+  background-color: #fff;
+  border: 1px solid #e7e4de;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 100;
+  white-space: nowrap;
+  min-width: 160px;
+}
+.plus-menu input {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 4px;
+}
+.plus-menu button {
+  cursor: pointer;
+}
+
+/* Saved section styling */
+#savedSection {
+  margin-top: 40px;
+}
+
+/* Saved header containing the title and add-folder button */
+.saved-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+/* Plus button for adding folders */
+.add-folder {
+  color: #6c6c6c;
+  font-size: 1.4rem;
+  cursor: pointer;
+  margin-left: 8px;
+  user-select: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.add-folder:hover {
+  color: #94c9a9;
+}
+
+/* Folder styling for user-created folders */
+.folder {
+  background-color: #fff;
+  border: 1px solid #e7e4de;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  color: #2f2c26;
+}
+#savedSection h2 {
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+  font-weight: normal;
+}
+.saved-tweet {
+  background-color: #fff;
+  border: 1px solid #e7e4de;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  color: #2f2c26;
+  cursor: grab;
+}
+
+/* Header for saved tweets: displays article name and author */
+.saved-tweet-header {
+  font-weight: bold;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+}
+
+/* Body text for saved tweets */
+.saved-tweet-content {
+  font-size: 0.95rem;
+}
+
+/* Container for floating folder icons. Position fixed so they stay
+   anchored on the right side of the viewport. Icons stack vertically
+   and are centred vertically. */
+.folder-icons {
+  position: fixed;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 200;
+}
+
+/* Individual folder icon. Uses the supplied green folder image as
+   the background. The icon is square with a slight rounding and
+   responds to hover with a gentle scale. */
+/* Wrapper for each folder icon and its label.  This ensures the
+   click target includes both the pictogram and text. */
+.folder-icon-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 48px;
+  cursor: pointer;
+}
+
+/* The folder pictogram itself. */
+.folder-icon {
+  width: 40px;
+  height: 34px;
+  background-image: url('folder_green.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 6px;
+  transition: transform 0.2s ease-out;
+}
+
+/* Slightly enlarge the icon on hover for feedback. */
+.folder-icon-wrapper:hover .folder-icon {
+  transform: scale(1.05);
+}
+
+/* Label beneath each folder icon.  Uses Charter font and dark
+   text colour to remain consistent with the rest of the UI. */
+.folder-name {
+  margin-top: 4px;
+  font-family: 'Charter', serif;
+  font-size: 0.7rem;
+  color: #2f2c26;
+  text-align: center;
+  line-height: 1.1;
+  word-break: break-word;
+}
+
+/* Burst animation for a newly created folder icon. The icon scales
+   up slightly and fades in, giving a satisfying pop when it appears. */
+.icon-burst {
+  animation: iconBurst 0.5s ease-out;
+}
+
+@keyframes iconBurst {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Folder view styling: when a folder icon is clicked, its contents
+   appear in this panel. It overlays the saved tweets list to
+   provide a dedicated space for browsing folder contents. */
+.folder-view {
+  margin-top: 20px;
+  background-color: #f5f3ee;
+  padding: 16px;
+  border-radius: 8px;
+}
+.folder-view-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.folder-view-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: normal;
+}
+.folder-view-header button {
+  background: none;
+  border: none;
+  color: #94c9a9;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0;
+}
+
+/* Actions row containing the Generate button and mode selector. The
+   row uses flexbox to align items horizontally on wide screens and
+   wraps gracefully on narrow screens. */
+.actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 15px;
+}
+
+/* Segmented mode control for selecting chunking mode. It resembles
+   a pill-shaped toggle with three options. */
+.mode-control {
+  display: inline-flex;
+  border: 1px solid #e7e4de;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.mode-option {
+  padding: 8px 14px;
+  border: none;
+  background: none;
+  color: #6c6c6c;
+  font-family: 'Charter', serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+.mode-option:hover {
+  background-color: #f0eee8;
+}
+.mode-option.selected {
+  background-color: #94c9a9;
+  color: #fff;
+}
+
+/* Statistics bar below the action row. Displays reading time and
+   snippet count. Use a muted colour and small font. */
+.stats-bar {
+  margin-top: 8px;
+  color: #6c6c6c;
+  font-size: 0.85rem;
+  font-family: 'Charter', serif;
+}
+
+/* Kebab container for global export menu in the saved header. Aligns
+   the button to the right of the header. */
+.kebab-container {
+  margin-left: auto;
+  position: relative;
+}
+.kebab-btn {
+  background: none;
+  border: none;
+  color: #6c6c6c;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.2s ease-in-out;
+}
+.kebab-btn:hover {
+  color: #94c9a9;
+}
+
+/* Export menu shown from kebab and folder icons. Styled as a small
+   card with subtle shadow and rounded corners. */
+.export-menu, .folder-export-menu {
+  background-color: #fff;
+  border: 1px solid #e7e4de;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 250;
+  white-space: nowrap;
+  font-family: 'Charter', serif;
+  font-size: 0.85rem;
+}
+
+/* Position the global export menu absolutely relative to the kebab
+   container so that it appears as an overlay rather than pushing
+   content. The menu pops below the three dots and aligns to the
+   right edge of the container. */
+.kebab-container .export-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+}
+.export-item {
+  padding: 6px 8px;
+  cursor: pointer;
+  color: #2f2c26;
+  border-radius: 4px;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+.export-item:hover {
+  background-color: #f5f3ee;
+  color: #94c9a9;
+}
+
+/* Style for the tweet selection checkbox container. Hidden by
+   default; appears when hovering over the tweet. */
+.tweet-select {
+  margin-left: auto;
+  display: none;
+}
+.tweet:hover .tweet-select {
+  display: block;
+}
+.tweet-select-checkbox {
+  cursor: pointer;
+  accent-color: #94c9a9;
+}
+
+/* Copy button styling. Hidden until hover. It sits in the top-right
+   corner of each card. */
+.copy-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #6c6c6c;
+  padding: 0;
+  cursor: pointer;
+  display: none;
+  transition: color 0.2s ease-in-out;
+}
+.tweet:hover .copy-btn {
+  display: block;
+}
+.copy-btn:hover {
+  color: #94c9a9;
+}
+
+/* Bulk action toolbar for selected tweets. Fixed in the bottom-right
+   corner. Hidden until at least one tweet is selected. */
+.bulk-toolbar {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #fff;
+  border: 1px solid #e7e4de;
+  /* Increase radius so the bulk toolbar feels more like a pill.
+     This helps the action bar blend seamlessly with the rest
+     of the interface. */
+  border-radius: 12px;
+  /* Add transition for smooth appearance and disappearance. */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 8px 12px;
+  display: none;
+  gap: 8px;
+  z-index: 300;
+}
+.bulk-toolbar button {
+  background-color: #94c9a9;
+  color: #fff;
+  border: none;
+  /* Slightly rounder buttons to match the softened toolbar */
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-family: 'Charter', serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+.bulk-toolbar button:hover {
+  background-color: #82b98f;
+}
+
+/* Focus mode overlay. Dims the rest of the page and centres a
+   single snippet card. Hidden by default. */
+.focus-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  backdrop-filter: blur(4px);
+}
+.focus-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 24px 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  max-width: 90%;
+  max-height: 80%;
+  overflow-y: auto;
+}
+.focus-prev, .focus-next, .focus-exit {
+  position: absolute;
+  background: none;
+  border: none;
+  color: #94c9a9;
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.focus-prev {
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.focus-next {
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.focus-exit {
+  top: 20px;
+  right: 20px;
+  font-size: 1.2rem;
+  transform: none;
+}
+
+/* Deleting state: when a saved tweet is dragged left beyond a
+   threshold, tint it red to communicate deletion. */
+.deleting {
+  background-color: #fbe8e6;
+  border-color: #f5c2c0;
+}
+
+/*
+ * Smooth slide‑out animation for unsaving tweets. When a user
+ * drags a saved tweet to the left beyond a threshold, the card
+ * glides to the left and fades away. This replaces the previous
+ * flip animation with a more graceful translation. The card
+ * continues moving slightly off‑screen to fully disappear.
+ */
+.slide-left-remove {
+  animation: slideLeftRemove 0.5s ease-out forwards;
+}
+
+@keyframes slideLeftRemove {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+}
+
+/* Undo toast styling. Appears bottom-right with message and button. */
+.undo-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #fff;
+  border: 1px solid #e7e4de;
+  /* Increase radius for a softer, more pill‑like shape. A larger
+     radius helps the toast feel more like a native mobile alert. */
+  border-radius: 12px;
+  /* Add a subtle animation for opacity and position changes. This
+     makes the toast appear and disappear more gracefully. */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 400;
+  font-family: 'Charter', serif;
+}
+.undo-toast span {
+  font-size: 0.85rem;
+  color: #2f2c26;
+}
+.undo-btn {
+  background-color: #94c9a9;
+  color: #fff;
+  border: none;
+  /* Match the toast’s increased rounding on the button as well. */
+  border-radius: 10px;
+  padding: 4px 8px;
+  font-family: 'Charter', serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+.undo-btn:hover {
+  background-color: #82b98f;
+}
+
+/* PDF note under textarea indicating unsupported PDF extraction. */
+.pdf-note {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #b34a4a;
+  font-style: italic;
+  font-family: 'Charter', serif;
+}
+
+.tweet-index {
+  font-size: 0.8rem;
+  color: #6c6c6c;
+  text-align: right;
+  margin-top: 6px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 15px;
+  }
+  .tweet-actions {
+    max-width: 100%;
+  }
+}

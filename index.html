@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Article to Tweet Thread</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <!-- Use the provided thought bank logo as the title.  The image
+           is centred and replaces the previous text heading.  The
+           descriptive subtitle remains to explain the application’s
+           purpose. -->
+      <img src="thought_bank_logo.png" alt="Thought Bank" class="logo" />
+      <p class="subtitle">A personal highlight manager across articles and papers.</p>
+    </header>
+
+    <main class="container">
+      <div class="user-inputs">
+        <!-- Renamed the fields from “Name” and “Handle” to “Article name” and
+             “Author” as requested. The underlying input IDs remain the
+             same so the existing script continues to function correctly.
+             Placeholders updated to match the new labels. -->
+        <label class="input-field"
+          >Article Name
+          <!-- Default to “Article Name” instead of “Your Name” -->
+          <input type="text" id="name" value="Article Name" placeholder="Article Name" />
+        </label>
+        <label class="input-field"
+          >Author
+          <!-- Use a neutral placeholder. The value remains an empty @username so users
+               know where to put their author handle. -->
+          <input
+            type="text"
+            id="handle"
+            value="@username"
+            placeholder="Author"
+          />
+        </label>
+      </div>
+      <!-- Wrapper around the drop/paste zone and the mode slider.  The
+           slider sits to the right of the drop box, outside its
+           dashed border. -->
+      <div class="drop-wrapper">
+        <div id="dropZone" class="drop-zone" tabindex="0">
+          <p class="drop-prompt">Drop or paste your article here to deposit. We’ll break the note…</p>
+          <textarea id="articleInput" hidden></textarea>
+        </div>
+        <div class="mode-slider">
+          <div class="slider-line"></div>
+          <span class="slider-dot" data-mode="paragraph" title="Paragraph mode"></span>
+          <span class="slider-dot" data-mode="280" title="Tweet Mode"></span>
+          <span class="slider-dot" data-mode="sentence" title="Sentence mode"></span>
+          <!-- Floating label shows the current mode briefly when the user
+               interacts with the slider. It is positioned via JS. -->
+          <div class="mode-label"></div>
+        </div>
+      </div>
+      <!-- Primary action button beneath the drop zone, centred horizontally.
+           It initiates the chunking process. -->
+      <button id="generateBtn" class="break-btn">Break the Note</button>
+
+      <div id="tweetsContainer"></div>
+
+      <!-- Section to display saved (hearted) tweet segments. -->
+      <section id="savedSection">
+        <div class="saved-header">
+          <h2>Saved Tweets</h2>
+        </div>
+        <div id="savedTweets"></div>
+        <!-- Folder view will display contents of a folder when a folder icon is clicked -->
+        <div id="folderView" class="folder-view" style="display: none;"></div>
+      </section>
+
+      <!-- Floating container for folder icons on the right side -->
+      <div id="folderIcons" class="folder-icons"></div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
