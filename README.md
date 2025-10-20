@@ -14,4 +14,4 @@ Modern pedagogy is, functionally, at a crossroads.
 
 Breadth has never become so accessible and retention has never become so scarce. The classic approach of note taking is hyper-inefficient. The current alternative however – memorizing articles, coordinating notes for projects between different sites has evolved into an incredibly frustrating process. I wanted a system where knowledge accrues like longitudinal data layered over time.
 
-Currently only self-hosted using script.js and html
+Currently only self-hosted w/ no server (trying to change that though.)
